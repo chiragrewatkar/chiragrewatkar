@@ -1,0 +1,12 @@
+pipeline{
+    agent any
+    stages{
+        stage('git clone'){ 
+            steps{
+                git 'https://github.com/chiragrewatkar/student-ui.git'
+                sh "mvn clean package"
+                deploy adapters: [tomcat8(credentialsId: '80e99d01-a408-4819-9e94-802b43aff9bc', path: '', url: 'http://44.203.188.43:8080/')], contextPath: '/', war: '**/*.war'
+            }
+        }
+    }
+}
